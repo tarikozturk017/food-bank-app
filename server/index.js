@@ -12,13 +12,47 @@ app.use(express.json());
 // create foodbank
 app.post("/foodbanks", async (req, res) => {
   try {
-    console.log(req.body);
+    const {
+      title,
+      description,
+      apt_number,
+      street,
+      city,
+      province,
+      postal_code,
+      phone,
+    } = req.body;
+
+    const newFoodbank = await pool.query(
+      "INSERT INTO foodbank (title, description, apt_number, street, city, province, postal_code, phone) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
+      [
+        title,
+        description,
+        apt_number,
+        street,
+        city,
+        province,
+        postal_code,
+        phone,
+      ]
+    );
+
+    res.json(newFoodbank.rows[0]);
+    // console.log(req.body);
   } catch (err) {
     console.error(err.message);
   }
 });
 
-//get
+//get all foodbanks
+app.get("/foodbanks", async (req, res) => {
+  try {
+    const allFoodbanks = await pool.query("SELECT * FROM foodbank");
+    res.json(allFoodbanks.rows);
+  } catch (err) {
+    console.message(err);
+  }
+});
 
 //update
 
