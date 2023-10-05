@@ -10,6 +10,9 @@
 .svn/
 migrate_working_dir/
 
+# Hidden files and folders (beginning with .)
+.env
+
 # IntelliJ related
 *.iml
 *.ipr
