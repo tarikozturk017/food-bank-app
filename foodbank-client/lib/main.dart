@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
@@ -64,17 +66,15 @@ class _MyHomePageState extends State<MyHomePage> {
 //   print(response);
 // }
   void _incrementCounter() async {
-    final response = await Dio().get('http://192.168.2.132:5000/foodbanks');
-    print(response.data[0]['phone']);
-    // void _incrementCounter() {
-    //   setState(() {
-    //     // This call to setState tells the Flutter framework that something has
-    //     // changed in this State, which causes it to rerun the build method below
-    //     // so that the display can reflect the updated values. If we changed
-    //     // _counter without calling setState(), then the build method would not be
-    //     // called again, and so nothing would appear to happen.
-    //     _counter++;
-    //   });
+    final dio = Dio();
+    final databaseHost = dotenv.env['DATABASE_HOST'] as String;
+
+    try {
+      final response = await dio.get(databaseHost);
+      print(response.data[0]['phone']);
+    } catch (e) {
+      print("Error: $e");
+    }
   }
 
   @override
