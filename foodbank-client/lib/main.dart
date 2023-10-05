@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 
 void main() {
   runApp(const MyApp());
@@ -56,16 +57,24 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+// final dio = Dio();
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+// void getHttp() async {
+//   final response = await Dio().get('https://restcountries.com/v3.1/all');
+//   print(response);
+// }
+  void _incrementCounter() async {
+    final response = await Dio().get('http://192.168.2.132:5000/foodbanks');
+    print(response.data[0]['phone']);
+    // void _incrementCounter() {
+    //   setState(() {
+    //     // This call to setState tells the Flutter framework that something has
+    //     // changed in this State, which causes it to rerun the build method below
+    //     // so that the display can reflect the updated values. If we changed
+    //     // _counter without calling setState(), then the build method would not be
+    //     // called again, and so nothing would appear to happen.
+    //     _counter++;
+    //   });
   }
 
   @override
