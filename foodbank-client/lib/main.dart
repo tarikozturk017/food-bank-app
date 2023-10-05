@@ -70,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final databaseHost = dotenv.env['DATABASE_HOST'] as String;
 
     try {
-      final response = await dio.get(databaseHost);
+      final response = await dio.get(databaseHost + '/foodbanks');
       print(response.data[0]['phone']);
     } catch (e) {
       print("Error: $e");
