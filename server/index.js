@@ -54,6 +54,18 @@ app.get("/foodbanks", async (req, res) => {
   }
 });
 
+// delete foodbank by id
+app.delete("/foodbanks/:id", async (req, res) => {
+  const foodbankId = req.params.id;
+  try {
+    await pool.query("DELETE FROM foodbank WHERE foodbank_id = $1", [
+      foodbankId,
+    ]);
+  } catch (err) {
+    console.message(err);
+  }
+});
+
 //update
 
 app.listen(5000, () => {
